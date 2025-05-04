@@ -226,22 +226,25 @@ html.platform-osx .title_c38106 {
 		height: 50px !important;
 	}
 	.wrapper_cc5dd2 > .svg_cc5dd2 {
-		inset: auto;
+		/**inset: auto;**/
 		contain: none;
 	}
 	.wrapper_cc5dd2 > .svg_cc5dd2 foreignObject {
 		mask: none;
-		overflow: visible;
 		x: -4;
 		y: -4;
+        width: 50px !important;
+        height: 50px !important;
 	}
 	.wrapper_cc5dd2 > .svg_cc5dd2 foreignObject[width="48"] {
 		x: 0;
 		y: 0;
 	}
 	.wrapper_cc5dd2 .wrapper__6e9f8 {
-		width: 48px;
-		height: 48px;
+		/**width: 48px;
+		height: 48px;**/
+		width: 50px;
+		height: 50px;
 		border-radius: 25px;
 		overflow: hidden;
 		transition: border-radius 0.2s ease;
@@ -693,6 +696,7 @@ html.platform-osx .title_c38106 {
 		border-radius: 3px;
 	}
 	.buttons__74017 {
+		padding-right: 16px !important;
 		margin-right: -6px !important;
 	}
 	.button__74017 {
@@ -997,7 +1001,8 @@ html.platform-osx .title_c38106 {
 			height: unset !important;
 			width: unset !important;
 			.channelAppLauncher_e6e74f & {
-				width: 24px !important;
+				/**width: 24px !important;**/
+				width: 28px !important;
 			}
 		}
 		.stackedBars__74017 {
@@ -1038,10 +1043,10 @@ html.platform-osx .title_c38106 {
 			}
 		}
 	}
-	.channelTextArea__74017 {
+	/**.channelTextArea__74017 {
 		border: unset;
 		border-radius: 4px;
-	}
+	}**/
 	.separator__49fc1 {
 		box-shadow: 0 1px 0 0 hsl(240 calc(1 * 5.263%) 7.451% /0.3), 0 1px 2px 0 hsl(240 calc(1 * 5.263%) 7.451% /0.3);
 	}
@@ -1785,6 +1790,7 @@ html .bar_c38106 {
 		gap: 4px !important;
 		ul.stack_dbd263 {
 			height: auto !important;
+			padding-bottom: 8px !important;
 		}
 	}
 	.listItem__650eb:has(.guildSeparator__252b6) {
@@ -1795,6 +1801,7 @@ html .bar_c38106 {
 	}
 	.guildSeparator__252b6 {
 		height: 2px;
+		width: 50px;
 	}
 	.folderIcon__48112 {
 		margin-top: 0px;
@@ -1812,17 +1819,20 @@ html .bar_c38106 {
 	display: none;
 }
 .folderGroupBackground__48112 {
-	left: 11px;
+	/**left: 11px;
 	width: 48px;
+	bottom: 4px;**/
+	left: 8px;
+	width: 56px;
 	bottom: 4px;
 	border-radius: 16px 16px 25px 25px;
 	background: var(--background-modifier-accent);
 	border: none;
 }
-.folderButtonContent__48112 {
+/**.folderButtonContent__48112 {
 	margin-left: -5px;
 	margin-top: -4px;
-}
+}**/
 .folderIconWrapper__48112 {
 	width: 48px;
 	height: 48px;
@@ -1874,7 +1884,8 @@ html .bar_c38106 {
 /* fix unread dm gap */
 .stack_dbd263[id="guild-list-unread-dms"] {
 	gap: 16px !important;
-	padding-bottom: 10px !important;
+	/**padding-bottom: 10px !important;**/
+	padding-bottom: 7px !important;
 }
 
 /* hides left sidebar when fullscreen mode */
