@@ -1040,13 +1040,13 @@ h2.title_b717a1,
 }
 
 /*nitro emoji paywall*/
-.emojiLockIcon_d982c2,
+/**.emojiLockIcon_d982c2,
 .categoryItemLockIconContainer__0fa6d {
 	display: none;
 }
 .lockedEmoji_d982c2:has(+ .emojiLockIconContainer_d982c2) {
 	filter: grayscale(1) !important;
-}
+}**/
 
 /* pinned messages popout header */
 .titleContainer__45690 {
@@ -1210,7 +1210,7 @@ h2.title_b717a1,
 }
 
 /* remove emoji nitro upsell */
-.categorySectionNitroLocked_c656ac {
+/**.categorySectionNitroLocked_c656ac {
 	background-color: transparent;
 }
 .nitroTopDividerContainer_b3fb5f {
@@ -1219,7 +1219,7 @@ h2.title_b717a1,
 }
 .upsellContainerFloating__0b69f {
 	display: none;
-}
+}**/
 
 /** Game profile */
 /*
