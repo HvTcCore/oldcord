@@ -13,7 +13,7 @@
 /*If you want to enable/disable each part (like disable profile theming), remove the above line
 and a [slash]* below. Always enable vars.css though please please pelasse plealslelle*/
 
-@import url("https://hvtccore.github.io/oldcord/src/components/vars.css"); */ /* !IMPORTANT! */
+@import url("https://hvtccore.github.io/oldcord/src/components/vars.css"); /* !IMPORTANT! */
 /* @import url("https://hvtccore.github.io/oldcord/src/components/color.css"); */
 @import url("https://hvtccore.github.io/oldcord/src/components/imgs.css");
 @import url("https://hvtccore.github.io/oldcord/src/components/other.css");
