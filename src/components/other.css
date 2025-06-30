@@ -2,37 +2,37 @@
 @font-face {
 	font-family: "Whitney";
 	font-weight: 300;
-	src: url(https://milbits.github.io/oldcord/src/assets/thin.woff2) format("woff2");
+	src: url(https://hvtccore.github.io/oldcord/src/assets/thin.woff2) format("woff2");
 }
 @font-face {
 	font-family: "Whitney";
-	src: url(https://milbits.github.io/oldcord/src/assets/normal.woff2);
+	src: url(https://hvtccore.github.io/oldcord/src/assets/normal.woff2);
 }
 @font-face {
 	font-family: "Whitney";
 	font-style: italic;
-	src: url(https://milbits.github.io/oldcord/src/assets/cursive.woff2);
+	src: url(https://hvtccore.github.io/oldcord/src/assets/cursive.woff2);
 }
 @font-face {
 	font-weight: 500;
 	font-family: "Whitney";
-	src: url(https://milbits.github.io/oldcord/src/assets/kindaBold.woff2);
+	src: url(https://hvtccore.github.io/oldcord/src/assets/kindaBold.woff2);
 }
 @font-face {
 	font-family: "Whitney";
 	font-weight: 600;
-	src: url(https://milbits.github.io/oldcord/src/assets/bold.woff2) format("woff2");
+	src: url(https://hvtccore.github.io/oldcord/src/assets/bold.woff2) format("woff2");
 }
 @font-face {
 	font-weight: 700;
 	font-family: "Whitney";
-	src: url(https://milbits.github.io/oldcord/src/assets/veryBold.woff2);
+	src: url(https://hvtccore.github.io/oldcord/src/assets/veryBold.woff2);
 }
 @font-face {
 	font-weight: 700;
 	font-style: italic;
 	font-family: "Whitney";
-	src: url(https://milbits.github.io/oldcord/src/assets/cursiveBold.woff2);
+	src: url(https://hvtccore.github.io/oldcord/src/assets/cursiveBold.woff2);
 }
 code {
 	font-family: "Source Code Pro";
@@ -189,7 +189,7 @@ code {
 .item__344e6 {
 	cursor: pointer;
 }
-.container__87bf1 .input__87bf1 {
+/**.container__87bf1 .input__87bf1 {
 	opacity: 1;
 	width: 0;
 	&:active:before {
@@ -216,7 +216,7 @@ code {
 }
 .container__87bf1 {
 	background: #0000 !important;
-}
+}**/ /**SwFxDel**/
 
 /* checkboxes*/
 .checkbox_f525d3 {
@@ -237,9 +237,9 @@ code {
 
 /** display:none graveyard*/
 .sessionMoreButton__803f2 svg, .newMemberBadge_f80704, .option__56fec:after, .premiumLabel_e681d1 > svg, .banner_ec75b3, .unreadIcon__7aaec /* new unread bar icon*/
-, .container__87bf1 svg, .communityInfoPill_f37cb1, .item_b3f026 svg {
+, /**.container__87bf1 svg, .communityInfoPill_f37cb1, .item_b3f026 svg {
 	display: none;
-}
+}**/ /**SwFxDel**/
 
 .characterBackground_eb4069 .logoWithText_eb4069 {
 	top: 24px;
@@ -817,77 +817,77 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar__001a7[style="--radio-bar-acce
 .connectionHeader_c7f964 {
 	& [alt="Battle.net"] {
 		background-color: hsl(200, calc(var(--saturation-factor, 1) * 100%), 45%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/battle.webp);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/battle.webp);
 	}
 
 	& [alt="GitHub"] {
 		background-color: hsl(0, calc(var(--saturation-factor, 1) * 4%), 9%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/github.svg);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/github.svg);
 	}
 
 	& [alt="Reddit"] {
 		background-color: hsl(16, calc(var(--saturation-factor, 1) * 100%), 50%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/reddit.webp);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/reddit.webp);
 	}
 
 	& [alt="Spotify"] {
 		background-color: var(--spotify);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/spotify.svg);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/spotify.svg);
 	}
 
 	& [alt="Steam"] {
 		background-color: hsl(215, calc(var(--saturation-factor, 1) * 35%), 15%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/steam.svg);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/steam.svg);
 	}
 
 	& [alt="Twitch"] {
 		background-color: var(--twitch);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/twitch.webp);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/twitch.webp);
 	}
 
 	& :is([alt="Twitter"], [alt="X"]) {
 		background-color: hsl(203, calc(var(--saturation-factor, 1) * 89%), 53%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/twitter.webp);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/twitter.webp);
 	}
 
 	& [alt="Xbox"] {
 		background-color: var(--xbox);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/xbox.svg);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/xbox.svg);
 	}
 
 	& [alt="YouTube"] {
 		background-color: var(--youtube);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/youtube.webp);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/youtube.webp);
 	}
 
 	& [alt="Skype"] {
 		background-color: hsl(196, calc(var(--saturation-factor, 1) * 100%), 42%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/skype.webp);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/skype.webp);
 	}
 
 	& [alt="League of Legends"] {
 		background-color: hsl(42, calc(var(--saturation-factor, 1) * 40%), 49%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/league.webp);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/league.webp);
 	}
 
 	& [alt="Facebook"] {
 		background-color: hsl(226, calc(var(--saturation-factor, 1) * 37%), 38%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/facebook.webp);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/facebook.webp);
 	}
 
 	& [alt="PlayStation Network"] {
 		background-color: var(--playstation);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/playstation.svg);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/playstation.svg);
 	}
 
 	& [alt="Epic Games"] {
 		background-color: hsl(34, calc(var(--saturation-factor, 1) * 6%), 22%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/epic.svg);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/epic.svg);
 	}
 
 	& [alt="Riot Games"] {
 		background-color: hsl(356, calc(var(--saturation-factor, 1) * 75%), 39%);
-		background-image: url(https://milbits.github.io/oldcord/src/assets/riot.svg);
+		background-image: url(https://hvtccore.github.io/oldcord/src/assets/riot.svg);
 	}
 
 	& [alt="Roblox"] {
@@ -1034,13 +1034,13 @@ h2.title_b717a1,
 }
 
 /*nitro emoji paywall*/
-.emojiLockIcon_d982c2,
+/**.emojiLockIcon_d982c2,
 .categoryItemLockIconContainer__0fa6d {
 	display: none;
 }
 .lockedEmoji_d982c2:has(+ .emojiLockIconContainer_d982c2) {
 	filter: grayscale(1) !important;
-}
+}**/ /**SwFxDel**/
 
 /* pinned messages popout header */
 .titleContainer__45690 {
@@ -1182,7 +1182,7 @@ h2.title_b717a1,
 }
 
 /* fix emoji picker sizing */
-.emojiItem_fc7141 {
+/**.emojiItem_fc7141 {
 	width: 40px !important;
 	height: 40px !important;
 	padding: 0;
@@ -1190,7 +1190,7 @@ h2.title_b717a1,
 }
 .emojiItem_fc7141 > :is(.image__1859b, .emojiSpriteImage_d982c2) {
 	transform: scale(0.8);
-}
+}**/ /**SwFxDel**/
 .emojiListRow_fc7141 {
 	height: unset;
 	grid-template-columns: repeat(auto-fill, 48px);
@@ -1204,7 +1204,7 @@ h2.title_b717a1,
 }
 
 /* remove emoji nitro upsell */
-.categorySectionNitroLocked_c656ac {
+/**.categorySectionNitroLocked_c656ac {
 	background-color: transparent;
 }
 .nitroTopDividerContainer_b3fb5f {
@@ -1213,7 +1213,7 @@ h2.title_b717a1,
 }
 .upsellContainerFloating__0b69f {
 	display: none;
-}
+}**/ /**SwFxDel**/
 
 /** Game profile */
 /*
@@ -1370,14 +1370,14 @@ h2.title_b717a1,
 }
 
 /* clan tags */
-.guildTagContainer__63ed3,
+/**.guildTagContainer__63ed3,
 .clanTagChiplet_c19a55,
 .chipletContainerInline__4a25c,
 .chipletContainerInline__10651,
 .chipletContainerInner__10651,
 .clanTag__5d473 {
 	display: none !important;
-}
+}**/ /**SwFxDel**/
 
 /* status formatting */
 :is(.subText__20a53, .subText__91a9d, .subtext__0a06e) {
@@ -1423,7 +1423,7 @@ h2.title_b717a1,
 			gap: unset !important;
 		}
 		.stack_dbd263:nth-of-type(2):before {
-			content: url(https://github.com/milbits/oldcord/blob/main/src/assets/banned.gif?raw=true);
+			content: url(https://github.com/hvtccore/oldcord/blob/main/src/assets/banned.gif?raw=true);
 			transform: scale(0.93);
 			margin-left: -14px;
 		}
@@ -1680,7 +1680,7 @@ https://github.com/XYZenix/DTM-16
 	}
 	.heroHeadingV2Container_c880e8 .marketingPageContainer__81281 .marketingPageHeading__81281:before {
 		content: " ";
-		background-image: url(https://raw.githubusercontent.com/milbits/oldcord/refs/heads/main/src/assets/Discord_Nitro_Wordmark_Filled.svg);
+		background-image: url(https://raw.githubusercontent.com/hvtccore/oldcord/refs/heads/main/src/assets/Discord_Nitro_Wordmark_Filled.svg);
 		width: 160px;
 		height: 65px;
 		display: block;
