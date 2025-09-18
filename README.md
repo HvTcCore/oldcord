@@ -4,7 +4,7 @@ A theme for Discord that brings the 2020 UI back without removing features
 
  By default, it completely removes profile effects (like banners) and clan tags. See `addons` below to get them back!
 
-![Preview](https://raw.githubusercontent.com/milbits/oldcord/master/.github/preview.webp)
+![Preview](https://raw.githubusercontent.com/hvtccore/oldcord/master/.github/preview.webp)
 
 > [!IMPORTANT]  
 > - Enable "Sync Profile Themes" in `Settings > Accessibility` to fix broken profile colors
@@ -17,7 +17,7 @@ A theme for Discord that brings the 2020 UI back without removing features
 
 Light mode does NOT have 2020 colors and it's tailored to ME but i think nobody cares at all
 
-<img src=https://raw.githubusercontent.com/milbits/oldcord/master/.github/previewLight.webp>
+<img src=https://raw.githubusercontent.com/hvtccore/oldcord/master/.github/previewLight.webp>
 preview outdated
 
 there's a `--oldcord-tint` variable to adjust the tint, value/number has to be in HSL hue
@@ -34,10 +34,10 @@ These are usually included in oldcord.theme.css, so all you need to do is remove
 
 | Name                   | Preview                                                                                | CSS                                                                                |
 | ---------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
-| Show Profile Effects (the one you prob want) | ![Image](https://raw.githubusercontent.com/milbits/oldcord/master/.github/showeffects.webp)                                                         | `@import url("https://milbits.github.io/oldcord/src/components/showEffects.css");` |
-| Show Clan Tags | im too lazy for an image                                                     | `@import url("https://milbits.github.io/oldcord/src/components/showTags.css");` |
-| Old Plead Emoji        | ![Image](https://raw.githubusercontent.com/milbits/oldcord/master/.github/emojis.webp)     | `@import url("https://milbits.github.io/oldcord/src/components/oldEmojis.css");`   |
-| Context Menu hover bg. | <img src=https://raw.githubusercontent.com/milbits/oldcord/master/.github/oldcontext.webp> | `@import url("https://milbits.github.io/oldcord/src/components/oldContext.css");`  |
+| Show Profile Effects (the one you prob want) | ![Image](https://raw.githubusercontent.com/hvtccore/oldcord/master/.github/showeffects.webp)                                                         | `@import url("https://hvtccore.github.io/oldcord/src/components/showEffects.css");` |
+| Show Clan Tags | im too lazy for an image                                                     | `@import url("https://hvtccore.github.io/oldcord/src/components/showTags.css");` |
+| Old Plead Emoji        | ![Image](https://raw.githubusercontent.com/hvtccore/oldcord/master/.github/emojis.webp)     | `@import url("https://hvtccore.github.io/oldcord/src/components/oldEmojis.css");`   |
+| Context Menu hover bg. | <img src=https://raw.githubusercontent.com/hvtccore/oldcord/master/.github/oldcontext.webp> | `@import url("https://hvtccore.github.io/oldcord/src/components/oldContext.css");`  |
 | HeaderPresence | ![Image](https://github.com/user-attachments/assets/1a809f81-0d76-4146-ad25-941b4332bcbd)                                                           | https://betterdiscord.app/plugin/HeaderPresence |
 | [Tanza3D & KingGamingYT's NoMosaic plugin (BetterDiscord)](https://github.com/KingGamingYT/discord-no-mosaic)                         | Restores the old image layout                               |
 
@@ -59,7 +59,7 @@ If you use custom/quickcss, paste the CSS at the very top!
 
 ## 🚮[BetterDiscord](https://betterdiscord.app/)
 
-1. Download [OldCord.theme.css](https://raw.githubusercontent.com/milbits/oldcord/main/OldCord.theme.css) (right-click > "Save As")
+1. Download [OldCord.theme.css](https://raw.githubusercontent.com/hvtccore/oldcord/main/OldCord.theme.css) (right-click > "Save As")
 2. Save the file to the BetterDiscord theme folder:
 
 - Windows: `%appdata%/BetterDiscord/themes`
@@ -69,7 +69,7 @@ If you use custom/quickcss, paste the CSS at the very top!
 
 #### Local method
 
-1. Download [OldCord.theme.css](https://raw.githubusercontent.com/milbits/oldcord/main/OldCord.theme.css) (right-click > "Save As")
+1. Download [OldCord.theme.css](https://raw.githubusercontent.com/hvtccore/oldcord/main/OldCord.theme.css) (right-click > "Save As")
 2. Move the file to the Vencord theme folder:
 
 - `Settings > Themes > Open theme folder`
@@ -78,14 +78,14 @@ If you use custom/quickcss, paste the CSS at the very top!
 
 Paste the following in `Settings > Themes`:
 
-- `https://milbits.github.io/oldcord/src/main.css`
+- `https://hvtccore.github.io/oldcord/src/main.css`
 
 ## 🎛️ Other
 
 1. Paste the following at **the top** of the CSS file/window:
 
 ```css
-@import url("https://milbits.github.io/oldcord/src/main.css");
+@import url("https://hvtccore.github.io/oldcord/src/main.css");
 ```
 
 
