@@ -394,7 +394,10 @@ html.visual-refresh {
 		height: 50px !important;
 	}
 	.wrapper_cc5dd2 > .svg_cc5dd2 {
-		inset: auto;
+		/**inset: auto;**/
+		@supports(not (-moz-appearance:none)) {
+			inset: auto;
+		} /**SwFx**/
 		contain: none;
 	}
 	.wrapper_cc5dd2 > .svg_cc5dd2 foreignObject {
@@ -408,8 +411,10 @@ html.visual-refresh {
 		y: 0;
 	}
 	.wrapper_cc5dd2 .wrapper__6e9f8 {
-		width: 48px;
-		height: 48px;
+		/**width: 48px;
+		height: 48px;**/
+		width: 50px; /**SwFx**/
+		height: 50px; /**SwFx**/
 		border-radius: 25px;
 		overflow: hidden;
 		transition: border-radius 0.2s ease;
@@ -934,6 +939,7 @@ html.visual-refresh {
 		border-radius: 3px;
 	}
 	.buttons__74017 {
+		padding-right: 18px !important; /**SwFxAdd**/
 		margin-right: -6px !important;
 	}
 	.button__74017 {
@@ -1201,9 +1207,9 @@ html.visual-refresh {
 		}
 	*/
 	/* chat box */
-	.scrollerSpacer__36d07 {
+	/**.scrollerSpacer__36d07 {
 		height: 30px;
-	}
+	}**/ /**SwFxDel**/
 	.chatGradientBase__36d07 {
 		display: none;
 	}
@@ -1225,12 +1231,14 @@ html.visual-refresh {
 		}
 		.spriteContainer__04eed {
 			--custom-emoji-sprite-size: 24px !important;
+			margin-left: -6px !important; /**SwFxAdd**/
 		}
 		.lottieIcon__5eb9b {
 			height: unset !important;
 			width: unset !important;
 			.channelAppLauncher_e6e74f & {
-				width: 24px !important;
+				/**width: 24px !important;**/
+				width: 30px !important; /**SwFx**/
 			}
 		}
 		.stackedBars__74017 {
@@ -1288,10 +1296,10 @@ html.visual-refresh {
 			}
 		}
 	}
-	.channelTextArea__74017 {
+	/**.channelTextArea__74017 {
 		border: unset;
 		border-radius: 8px;
-	}
+	}**/ /**SwFxDel**/
 	.separator__49fc1 {
 		box-shadow: 0 1px 0 0 hsl(240 calc(1 * 5.263%) 7.451% /0.3), 0 1px 2px 0 hsl(240 calc(1 * 5.263%) 7.451% /0.3);
 	}
@@ -1329,9 +1337,11 @@ html.visual-refresh {
 	/* jump to present bar & failed to load bar */
 	.jumpToPresentBar__0f481,
 	.messagesErrorBar__0f481 {
-		bottom: 6px;
+		/**bottom: 6px;**/ /**SwFxDel**/
 		padding-bottom: 4px !important;
-		border-radius: 8px 8px 0 0;
+		margin-bottom: -18px !important; /**SwFxAdd**/
+		/**border-radius: 8px 8px 0 0;**/
+		border-radius: 8px 8px 6px 6px; /**SwFx**/
 	}
 	.jumpToPresentBar__0f481 {
 		background-color: var(--background-accent);
@@ -2237,6 +2247,17 @@ html.visual-refresh {
 		justify-content: space-between;
 		overflow: hidden;
 	}
+
+	@supports(-moz-appearance:none) {
+		.messagesWrapper__36d07 {
+			.scroller__36d07 {
+				margin-bottom: 12px !important;
+				.scrollerSpacer__36d07{
+					margin-bottom: -12px !important;
+				}
+			}
+		}
+	} /**SwFxAdd**/
 }
 
 /*ttitle bar. and stufuff. i guess*/
@@ -2271,6 +2292,8 @@ html.visual-refresh {
 	top: 51px;
 	gap: 8px;
 	z-index: 102;
+	margin: unset; /**SwFxAdd**/
+	margin-top: 6px; /**SwFxAdd**/
 }
 .bar_c38106 .trailing_c38106:has(> .clickable__9293f) {
 	top: 51px;
@@ -2278,10 +2301,10 @@ html.visual-refresh {
 	z-index: 102;
 	margin-right: -38px;
 }
-.bar_c38106 .trailing_c38106 .clickable_c99c29 {
+/**.bar_c38106 .trailing_c38106 .clickable_c99c29 {
 	margin: unset;
 	margin-top: 6px;
-}
+}**/ /**SwFxDel**/
 .bar_c38106 .channelTabs-trailing .trailing_c38106 {
 	top: 36px;
 	right: 10px;
@@ -2380,6 +2403,7 @@ html .bar_c38106 {
 		gap: 0px !important;
 		.isExpanded__48112 ul.stack_dbd263 {
 			height: auto !important;
+			padding-bottom: 9px !important; /**SwFxAdd**/
 		}
 	}
 	#guild-list-unread-dms:has(.listItem__650eb) {
@@ -2393,6 +2417,7 @@ html .bar_c38106 {
 	}
 	.guildSeparator__252b6 {
 		height: 2px;
+		width: 50px; /**SwFxAdd**/
 	}
 	.folderIcon__48112 {
 		margin-top: 0px;
@@ -2414,8 +2439,10 @@ html .bar_c38106 {
 	display: none;
 }
 .folderGroupBackground__48112 {
-	left: 11px;
-	width: 48px;
+	/**left: 11px;
+	width: 48px;**/
+	left: 8px; /**SwFx**/
+	width: 56px; /**SwFx**/
 	bottom: 4px;
 	border-radius: 16px 16px 25px 25px;
 	background: var(--background-modifier-accent);
