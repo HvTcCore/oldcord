@@ -31,7 +31,8 @@ html:not(.custom-theme-background) .theme-dark:not(.theme-darker, .theme-midnigh
 	--scrollbar-thin-track: transparent;
 	--scrollbar-auto-thumb: #202225;
 	--scrollbar-auto-track: #2e3338;
-	--scrollbar-auto-scrollbar-color-thumb: #202225;
+	/**--scrollbar-auto-scrollbar-color-thumb: #202225;**/
+	--scrollbar-auto-scrollbar-color-thumb: #ffffff40; /**SwFx**/
 	--scrollbar-auto-scrollbar-color-track: #2f3136;
 	--elevation-stroke: 0 0 0 1px #04040526;
 	--elevation-low: 0 1px 0 #04040533, 0 1.5px 0 #0606070d, 0 2px 0 #0404050d;

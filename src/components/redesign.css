@@ -380,7 +380,10 @@ html.visual-refresh {
 		height: 50px !important;
 	}
 	.cc5dd25190031396-wrapper > .cc5dd25190031396-svg {
-		inset: auto;
+		/**inset: auto;**/
+		@supports(not (-moz-appearance:none)) {
+			inset: auto;
+		} /**SwFx**/
 		contain: none;
 	}
 	.cc5dd25190031396-wrapper > .cc5dd25190031396-svg foreignObject {
@@ -394,8 +397,10 @@ html.visual-refresh {
 		y: 0;
 	}
 	.cc5dd25190031396-wrapper ._6e9f8dce4cc18de3-wrapper {
-		width: 48px;
-		height: 48px;
+		/**width: 48px;
+		height: 48px;**/
+		width: 50px; /**SwFx**/
+		height: 50px; /**SwFx**/
 		border-radius: 25px;
 		overflow: hidden;
 		transition: border-radius 0.2s ease;
@@ -984,6 +989,7 @@ html.visual-refresh {
 		border-radius: 3px;
 	}
 	._740174f3d6a2c8fe-buttons {
+		padding-right: 18px !important; /**SwFxAdd**/
 		margin-right: -6px !important;
 	}
 	._740174f3d6a2c8fe-button {
@@ -1250,9 +1256,9 @@ html.visual-refresh {
 		}
 	*/
 	/* chat box */
-	._36d072eab2b2e737-scrollerSpacer {
+	/**._36d072eab2b2e737-scrollerSpacer {
 		height: 30px;
-	}
+	}**/ /**SwFxDel**/
 	._36d072eab2b2e737-chatGradientBase {
 		display: none;
 	}
@@ -1286,7 +1292,8 @@ html.visual-refresh {
 			height: 24px !important;
 			width: 24px !important;
 			.channelAppLauncher_e6e74f & {
-				width: 24px !important;
+				/**width: 24px !important;**/
+				width: 30px !important; /**SwFx**/
 			}
 		}
 		._740174f3d6a2c8fe-stackedBars {
@@ -1347,10 +1354,10 @@ html.visual-refresh {
 			}
 		}
 	}
-	._740174f3d6a2c8fe-channelTextArea {
+	/**._740174f3d6a2c8fe-channelTextArea {
 		border: unset;
 		border-radius: 8px;
-	}
+	}**/ /**SwFxDel**/
 	._49fc18ba07c5025f-separator {
 		box-shadow: 0 1px 0 0 hsl(240 calc(1 * 5.263%) 7.451% /0.3), 0 1px 2px 0 hsl(240 calc(1 * 5.263%) 7.451% /0.3);
 	}
@@ -1388,9 +1395,11 @@ html.visual-refresh {
 	/* jump to present bar & failed to load bar */
 	._0f481cbbd7530492-jumpToPresentBar,
 	._0f481cbbd7530492-messagesErrorBar {
-		bottom: 6px;
+		/**bottom: 6px;**/ /**SwFxDel**/
 		padding-bottom: 4px !important;
-		border-radius: 8px 8px 0 0;
+		margin-bottom: -18px !important; /**SwFxAdd**/
+		/**border-radius: 8px 8px 0 0;**/
+		border-radius: 8px 8px 6px 6px; /**SwFx**/
 	}
 	._0f481cbbd7530492-jumpToPresentBar {
 		background-color: var(--background-accent);
@@ -2314,6 +2323,17 @@ html.visual-refresh {
 		justify-content: space-between;
 		overflow: hidden;
 	}
+
+	@supports(-moz-appearance:none) {
+		._36d072eab2b2e737-messagesWrapper {
+			._36d072eab2b2e737-scroller {
+				margin-bottom: 12px !important;
+				._36d072eab2b2e737-scrollerSpacer{
+					margin-bottom: -12px !important;
+				}
+			}
+		}
+	} /**SwFxAdd**/
 }
 
 /*ttitle bar. and stufuff. i guess*/
@@ -2348,6 +2368,8 @@ html.visual-refresh {
 	top: 51px;
 	gap: 8px;
 	z-index: 102;
+	margin: unset; /**SwFxAdd**/
+	margin-top: 6px; /**SwFxAdd**/
 }
 .c38106a3f0c3ca76-bar .c38106a3f0c3ca76-trailing:has(> ._9293f6b2fc12398a-clickable) {
 	top: 51px;
@@ -2355,9 +2377,9 @@ html.visual-refresh {
 	z-index: 102;
 	margin-right: -38px;
 }
-.c38106a3f0c3ca76-bar .c38106a3f0c3ca76-trailing .c99c29809d200a61-clickable {
+/**.c38106a3f0c3ca76-bar .c38106a3f0c3ca76-trailing .c99c29809d200a61-clickable {
 	margin: unset;
-}
+}**/ /**SwFxDel**/
 .c38106a3f0c3ca76-bar .channelTabs-trailing .c38106a3f0c3ca76-trailing {
 	top: 36px;
 	right: 10px;
@@ -2459,6 +2481,7 @@ html .c38106a3f0c3ca76-bar {
 		gap: 0px !important;
 		._48112cbe77dc5022-isExpanded ul.dbd2630aec71879b-stack {
 			height: auto !important;
+			padding-bottom: 9px !important; /**SwFxAdd**/
 		}
 	}
 	#guild-list-unread-dms:has(._650eb104245d257b-listItem) {
@@ -2472,6 +2495,7 @@ html .c38106a3f0c3ca76-bar {
 	}
 	._252b6afd49fda06f-guildSeparator {
 		height: 2px;
+		width: 50px; /**SwFxAdd**/
 	}
 	._48112cbe77dc5022-folderIcon {
 		margin-top: 0px;
@@ -2493,8 +2517,10 @@ html .c38106a3f0c3ca76-bar {
 	display: none;
 }
 ._48112cbe77dc5022-folderGroupBackground {
-	left: 11px;
-	width: 48px;
+	/**left: 11px;
+	width: 48px;**/
+	left: 8px; /**SwFx**/
+	width: 56px; /**SwFx**/
 	bottom: 4px;
 	border-radius: 16px 16px 25px 25px;
 	background: var(--background-modifier-accent);
