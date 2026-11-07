@@ -51,10 +51,35 @@ jobs:
           git push origin fixes
 
       - name: Sync
+        env:
+          CLASSMAP_SUMMARY: ${{ github.step_summary }}
         run: |
           git fetch -q origin fixes
           git checkout -q -B fixes origin/fixes
           bash tools/sync.sh --push
+
+      # Проверка классов в твоих собственных строках (в ветке fixes). Не валит запуск:
+      # если что-то не нашлось — открывает отдельный issue со списком.
+      - name: Check classes in my fixes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          python3 tools/classmap.py --mine upstream/main --summary "$GITHUB_STEP_SUMMARY" --fail-on-dead > report.txt 2>&1
+          RC=$?
+          cat report.txt
+          TITLE="Классы в фиксах устарели"
+          if [ "$RC" = 4 ] && [ -z "$(gh issue list --state open --search "in:title $TITLE" --json number -q '.[].number')" ]; then
+            gh issue create --title "$TITLE" --body "В твоих строках есть классы, которых больше нет в Discord и для которых не нашлась замена.
+          Опубликованная тема всё равно собрана, просто эти правила сейчас ничего не делают.
+
+          \`\`\`
+          $(sed -n '/^Не найдены/,$p' report.txt)
+          \`\`\`
+
+          Лог: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          fi
+          exit 0
 
       - name: Open issue on failure
         if: failure()
