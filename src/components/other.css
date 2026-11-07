@@ -1138,13 +1138,13 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar_jqZBm0[style="--radio-bar-acce
 }
 
 /*nitro emoji paywall*/
-.emojiLockIcon_JBR6wp,
+/**.emojiLockIcon_JBR6wp,
 .categoryItemLockIconContainer_WScet3 {
 	display: none;
 }
 .lockedEmoji_JBR6wp:has(+ .emojiLockIconContainer_JBR6wp) {
 	filter: grayscale(1) !important;
-}
+}**/ /**SwFxDel**/
 
 /* pinned messages popout header */
 .titleContainer_6bgemo {
@@ -1382,7 +1382,7 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar_jqZBm0[style="--radio-bar-acce
 }
 
 /* fix emoji picker sizing */
-.emojiItem_6OcK5D {
+/**.emojiItem_6OcK5D {
 	width: 40px !important;
 	height: 40px !important;
 	padding: 0;
@@ -1390,7 +1390,7 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar_jqZBm0[style="--radio-bar-acce
 }
 .emojiItem_6OcK5D > :is(.image_Uc0G8h, .emojiSpriteImage_JBR6wp) {
 	transform: scale(0.8);
-}
+}**/ /**SwFxDel**/
 .emojiListRow_6OcK5D {
 	height: unset;
 	grid-template-columns: repeat(auto-fill, 48px);
@@ -1404,7 +1404,7 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar_jqZBm0[style="--radio-bar-acce
 }
 
 /* remove emoji nitro upsell */
-.categorySectionNitroLocked_6c9R7U {
+/**.categorySectionNitroLocked_6c9R7U {
 	background-color: transparent;
 }
 .nitroTopDividerContainer_KU0wA7 {
@@ -1413,7 +1413,7 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar_jqZBm0[style="--radio-bar-acce
 }
 .upsellContainerFloating_jFJVCQ {
 	display: none;
-}
+}**/ /**SwFxDel**/
 
 /* game profiles v2 */
 .container_WtnPzl {
