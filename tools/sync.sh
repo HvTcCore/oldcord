@@ -64,6 +64,22 @@ if [[ "$MODE" != "build" ]]; then
   NEW_UP="upstream/$UPSTREAM_BRANCH"
 
   git checkout -q "$FIXES_BRANCH"
+
+  # Драйвер слияния CSS, который понимает переименование классов Discord (tools/cssmerge.py).
+  # Копируем его в .git, чтобы он был доступен на любом шаге rebase, и подключаем через
+  # .git/info/attributes (не через .gitattributes в репе — его в оригинале нет).
+  PY="$(command -v python3 || command -v python || true)"
+  GD="$(cd "$(git rev-parse --git-dir)" && pwd)"
+  if [[ -f tools/cssmerge.py && -n "$PY" ]] && "$PY" -c 'import sys; sys.exit(sys.version_info < (3, 8))' 2>/dev/null; then
+    cp tools/cssmerge.py "$GD/cssmerge.py"
+    git config merge.cssclasses.name "CSS с учётом переименования классов Discord"
+    git config merge.cssclasses.driver "\"$PY\" \"$GD/cssmerge.py\" %O %A %B %P"
+    mkdir -p "$GD/info"
+    grep -qs 'merge=cssclasses' "$GD/info/attributes" || echo '*.css merge=cssclasses' >> "$GD/info/attributes"
+  else
+    warn "Нет python 3.8+: слияние без учёта переименований классов (возможны лишние конфликты)"
+  fi
+
   OLD_UP="$(git merge-base HEAD "$NEW_UP")"
   if [[ "$OLD_UP" == "$(git rev-parse "$NEW_UP")" ]]; then
     say "Новых коммитов в апстриме нет"
