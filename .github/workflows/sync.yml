@@ -1,0 +1,69 @@
+name: Sync with upstream
+
+on:
+  schedule:
+    - cron: "17 6 * * *"   # раз в день
+  workflow_dispatch:        # кнопка "Run workflow" во вкладке Actions
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # PAT нужен, потому что в пушимых коммитах лежит этот workflow-файл,
+          # а стандартный токен GitHub пушить такие коммиты не может.
+          token: ${{ secrets.SYNC_TOKEN || github.token }}
+
+      - name: Git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+
+      # Первый запуск: ветки fixes ещё нет. Берём firefix.patch, загруженный в репу,
+      # накатываем его на свежий оригинал, старый main сохраняем в ветку old-main.
+      - name: Bootstrap (только первый запуск)
+        run: |
+          if git ls-remote --exit-code --heads origin fixes >/dev/null; then
+            echo "Ветка fixes уже есть, пропускаю"
+            exit 0
+          fi
+          PATCH="$(git ls-files '*firefix.patch' '*FireFix.patch' | head -n 1)"
+          if [ -z "$PATCH" ]; then
+            echo "::error::Нет ветки fixes и не найден firefix.patch. Загрузи его в репу и перезапусти."
+            exit 1
+          fi
+          cp "$PATCH" "$RUNNER_TEMP/firefix.patch"
+          git push origin "HEAD:refs/heads/old-main"
+          git remote add upstream https://github.com/milbits/oldcord
+          git fetch -q upstream main
+          git checkout -q -b fixes upstream/main
+          git am -3 "$RUNNER_TEMP/firefix.patch"
+          git push origin fixes
+
+      - name: Sync
+        run: |
+          git fetch -q origin fixes
+          git checkout -q -B fixes origin/fixes
+          bash tools/sync.sh --push
+
+      - name: Open issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Апстрим не накатился автоматически"
+          if [ -z "$(gh issue list --state open --search "in:title $TITLE" --json number -q '.[].number')" ]; then
+            gh issue create --title "$TITLE" --body "Лог: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          Локально: \`git checkout fixes\`, затем \`tools/sync.sh\` (на Windows \`tools\\sync.cmd\`), реши конфликт, потом запусти с \`--push\`."
+          fi

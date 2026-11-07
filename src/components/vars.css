@@ -35,7 +35,8 @@ html:not(.custom-theme-background) .theme-dark:not(.theme-darker, .theme-midnigh
 	--scrollbar-thin-track: transparent;
 	--scrollbar-auto-thumb: var(--primary-700);
 	--scrollbar-auto-track: var(--primary-630);
-	--scrollbar-auto-scrollbar-color-thumb: var(--primary-700);
+	/**--scrollbar-auto-scrollbar-color-thumb: var(--primary-700);**/
+	--scrollbar-auto-scrollbar-color-thumb: #ffffff40; /**SwFx**/
 	--scrollbar-auto-scrollbar-color-track: var(--primary-630);
 	--elevation-stroke: 0 0 0 1px hsla(240, calc(var(--saturation-factor, 1) * 11%), 2%, 0.15);
 	--elevation-low:
