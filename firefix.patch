@@ -1,0 +1,552 @@
+From 15d7bd8e22783bead8273ffa3d887da6e480405a Mon Sep 17 00:00:00 2001
+From: t <t@t>
+Date: Sat, 7 Nov 2026 11:54:46 +0000
+Subject: [PATCH] =?UTF-8?q?FireFix:=20Firefox=20fixes=20+=20=D0=BF=D0=B0?=
+ =?UTF-8?q?=D1=82=D1=87=D0=B5=D1=80?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HnMTP1kcmh3mnEj3srCv9V
+---
+ .gitattributes              |   3 +
+ .github/workflows/sync.yml  |  69 ++++++++++++++++
+ OldCord.theme.css           |  12 +--
+ src/components/other.css    |  12 +--
+ src/components/redesign.css |  51 +++++++++---
+ src/components/vars.css     |   3 +-
+ tools/sync.cmd              |  22 ++++++
+ tools/sync.sh               | 153 ++++++++++++++++++++++++++++++++++++
+ 8 files changed, 300 insertions(+), 25 deletions(-)
+ create mode 100644 .gitattributes
+ create mode 100644 .github/workflows/sync.yml
+ create mode 100644 tools/sync.cmd
+ create mode 100755 tools/sync.sh
+
+diff --git a/.gitattributes b/.gitattributes
+new file mode 100644
+index 0000000..44b9c00
+--- /dev/null
++++ b/.gitattributes
+@@ -0,0 +1,3 @@
++# bash-скрипт должен оставаться с LF даже на Windows, иначе bash падает на \r
++*.sh  text eol=lf
++*.cmd text eol=crlf
+diff --git a/.github/workflows/sync.yml b/.github/workflows/sync.yml
+new file mode 100644
+index 0000000..fe08577
+--- /dev/null
++++ b/.github/workflows/sync.yml
+@@ -0,0 +1,69 @@
++name: Sync with upstream
++
++on:
++  schedule:
++    - cron: "17 6 * * *"   # раз в день
++  workflow_dispatch:        # кнопка "Run workflow" во вкладке Actions
++
++permissions:
++  contents: write
++  issues: write
++
++concurrency:
++  group: sync
++  cancel-in-progress: false
++
++jobs:
++  sync:
++    runs-on: ubuntu-latest
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          fetch-depth: 0
++          # PAT нужен, потому что в пушимых коммитах лежит этот workflow-файл,
++          # а стандартный токен GitHub пушить такие коммиты не может.
++          token: ${{ secrets.SYNC_TOKEN || github.token }}
++
++      - name: Git identity
++        run: |
++          git config user.name  "github-actions[bot]"
++          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
++
++      # Первый запуск: ветки fixes ещё нет. Берём firefix.patch, загруженный в репу,
++      # накатываем его на свежий оригинал, старый main сохраняем в ветку old-main.
++      - name: Bootstrap (только первый запуск)
++        run: |
++          if git ls-remote --exit-code --heads origin fixes >/dev/null; then
++            echo "Ветка fixes уже есть, пропускаю"
++            exit 0
++          fi
++          PATCH="$(git ls-files '*firefix.patch' '*FireFix.patch' | head -n 1)"
++          if [ -z "$PATCH" ]; then
++            echo "::error::Нет ветки fixes и не найден firefix.patch. Загрузи его в репу и перезапусти."
++            exit 1
++          fi
++          cp "$PATCH" "$RUNNER_TEMP/firefix.patch"
++          git push origin "HEAD:refs/heads/old-main"
++          git remote add upstream https://github.com/milbits/oldcord
++          git fetch -q upstream main
++          git checkout -q -b fixes upstream/main
++          git am -3 "$RUNNER_TEMP/firefix.patch"
++          git push origin fixes
++
++      - name: Sync
++        run: |
++          git fetch -q origin fixes
++          git checkout -q -B fixes origin/fixes
++          bash tools/sync.sh --push
++
++      - name: Open issue on failure
++        if: failure()
++        env:
++          GH_TOKEN: ${{ github.token }}
++        run: |
++          TITLE="Апстрим не накатился автоматически"
++          if [ -z "$(gh issue list --state open --search "in:title $TITLE" --json number -q '.[].number')" ]; then
++            gh issue create --title "$TITLE" --body "Лог: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
++
++          Локально: \`git checkout fixes\`, затем \`tools/sync.sh\` (на Windows \`tools\\sync.cmd\`), реши конфликт, потом запусти с \`--push\`."
++          fi
+diff --git a/OldCord.theme.css b/OldCord.theme.css
+index f50a128..7367548 100644
+--- a/OldCord.theme.css
++++ b/OldCord.theme.css
+@@ -8,21 +8,21 @@
+  */
+ 
+ /* Everything in one */
+-@import url("https://milbits.github.io/oldcord/src/main.css");
++/**@import url("https://milbits.github.io/oldcord/src/main.css");**/ /**SwFxDel**/
+ 
+ /* If you want to enable/disable each part (like disable profile theming), remove the above line and a [slash]* below. */
+ 
+-/*@import url("https://milbits.github.io/oldcord/src/components/vars.css");*/ /* I don't recommend disabling this */
++@import url("https://milbits.github.io/oldcord/src/components/vars.css"); /* I don't recommend disabling this */
+ 
+ /*@import url("https://milbits.github.io/oldcord/src/components/color.css");*/ /* Restores old blurple n stuff*/
+-/*@import url("https://milbits.github.io/oldcord/src/components/imgs.css");*/ /* 2020 default avatars and other icons */
+-/*@import url("https://milbits.github.io/oldcord/src/components/other.css");*/ /* Random stuff that add to the theme */
++@import url("https://milbits.github.io/oldcord/src/components/imgs.css"); /* 2020 default avatars and other icons */
++@import url("https://milbits.github.io/oldcord/src/components/other.css"); /* Random stuff that add to the theme */
+ /*@import url("https://milbits.github.io/oldcord/src/components/profile.css");*/ /* Restores the original 2020 Profile UI. Disables cosmetics by default, look at "addons" below */
+-/*@import url("https://milbits.github.io/oldcord/src/components/redesign.css");*/ /* The old Discord layout, pre-2025. */
++@import url("https://milbits.github.io/oldcord/src/components/redesign.css"); /* The old Discord layout, pre-2025. */
+ 
+ 
+  /*
+-  * Addons
++  * Addons (NOT RECOMMENDED TO USE, it works shitty with current configuration)
+   * remove a "/*" below to enable one
+   */
+ /* profile cosmetics! woah! funky banners and colors and nametags and stuff! so cool! */
+diff --git a/src/components/other.css b/src/components/other.css
+index 5324604..7329c5f 100644
+--- a/src/components/other.css
++++ b/src/components/other.css
+@@ -1138,13 +1138,13 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar__1bda4[style="--radio-bar-acce
+ }
+ 
+ /*nitro emoji paywall*/
+-.emojiLockIcon_d982c2,
++/**.emojiLockIcon_d982c2,
+ .categoryItemLockIconContainer__0fa6d {
+ 	display: none;
+ }
+ .lockedEmoji_d982c2:has(+ .emojiLockIconContainer_d982c2) {
+ 	filter: grayscale(1) !important;
+-}
++}**/ /**SwFxDel**/
+ 
+ /* pinned messages popout header */
+ .titleContainer__432f4 {
+@@ -1382,7 +1382,7 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar__1bda4[style="--radio-bar-acce
+ }
+ 
+ /* fix emoji picker sizing */
+-.emojiItem_fc7141 {
++/**.emojiItem_fc7141 {
+ 	width: 40px !important;
+ 	height: 40px !important;
+ 	padding: 0;
+@@ -1390,7 +1390,7 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar__1bda4[style="--radio-bar-acce
+ }
+ .emojiItem_fc7141 > :is(.image__1859b, .emojiSpriteImage_d982c2) {
+ 	transform: scale(0.8);
+-}
++}**/ /**SwFxDel**/
+ .emojiListRow_fc7141 {
+ 	height: unset;
+ 	grid-template-columns: repeat(auto-fill, 48px);
+@@ -1404,7 +1404,7 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar__1bda4[style="--radio-bar-acce
+ }
+ 
+ /* remove emoji nitro upsell */
+-.categorySectionNitroLocked_c656ac {
++/**.categorySectionNitroLocked_c656ac {
+ 	background-color: transparent;
+ }
+ .nitroTopDividerContainer_b3fb5f {
+@@ -1413,7 +1413,7 @@ html:is([lang="en-us"], [lang="en-gb"]) .radioBar__1bda4[style="--radio-bar-acce
+ }
+ .upsellContainerFloating__0b69f {
+ 	display: none;
+-}
++}**/ /**SwFxDel**/
+ 
+ /* game profiles v2 */
+ .container__8e830 {
+diff --git a/src/components/redesign.css b/src/components/redesign.css
+index 94823f5..b44c665 100644
+--- a/src/components/redesign.css
++++ b/src/components/redesign.css
+@@ -279,6 +279,7 @@ html.visual-refresh {
+ 		&:has(> :nth-child(6)) .buttonChevron__37e49 {
+ 			display: none;
+ 		}
++		padding-right: 6px !important; /**SwFxAdd**/
+ 	}
+ 
+ 	.wrapper_cc5dd2,
+@@ -288,7 +289,10 @@ html.visual-refresh {
+ 		height: 50px !important;
+ 	}
+ 	.wrapper_cc5dd2 > .svg_cc5dd2 {
+-		inset: auto;
++		/**inset: auto;**/
++		@supports(not (-moz-appearance:none)) {
++			inset: auto;
++		} /**SwFx**/
+ 		contain: none;
+ 	}
+ 	.wrapper_cc5dd2 > .svg_cc5dd2 foreignObject {
+@@ -302,8 +306,10 @@ html.visual-refresh {
+ 		y: 0;
+ 	}
+ 	.wrapper_cc5dd2 .wrapper__6e9f8 {
+-		width: 48px;
+-		height: 48px;
++		/**width: 48px;
++		height: 48px;**/
++		width: 50px; /**SwFx**/
++		height: 50px; /**SwFx**/
+ 		border-radius: 25px;
+ 		overflow: hidden;
+ 		transition: border-radius 0.2s ease;
+@@ -1040,6 +1046,7 @@ html.visual-refresh {
+ 		border-radius: 3px;
+ 	}
+ 	.buttons__74017 {
++		padding-right: 18px !important; /**SwFxAdd**/
+ 		margin-right: -6px !important;
+ 	}
+ 	.button__74017 {
+@@ -1333,9 +1340,9 @@ html.visual-refresh {
+ 	}
+ 
+ 	/* chat box */
+-	.scrollerSpacer__36d07 {
++	/**.scrollerSpacer__36d07 {
+ 		height: 30px;
+-	}
++	}**/ /**SwFxDel**/
+ 	.chatGradientBase__36d07 {
+ 		display: none;
+ 	}
+@@ -1373,7 +1380,8 @@ html.visual-refresh {
+ 			height: 24px !important;
+ 			width: 24px !important;
+ 			.channelAppLauncher_e6e74f & {
+-				width: 24px !important;
++				/**width: 24px !important;**/
++				width: 30px !important; /**SwFx**/
+ 			}
+ 		}
+ 		.stackedBars__74017 {
+@@ -1436,10 +1444,10 @@ html.visual-refresh {
+ 			}
+ 		}
+ 	}
+-	.channelTextArea__74017 {
++	/**.channelTextArea__74017 {
+ 		border: unset;
+ 		border-radius: 8px;
+-	}
++	}**/ /**SwFxDel**/
+ 	.separator__49fc1 {
+ 		box-shadow:
+ 			0 1px 0 0 hsl(240 calc(1 * 5.263%) 7.451% /0.3),
+@@ -1484,9 +1492,11 @@ html.visual-refresh {
+ 	/* jump to present bar & failed to load bar */
+ 	.jumpToPresentBar__0f481,
+ 	.messagesErrorBar__0f481 {
+-		bottom: 6px;
++		/**bottom: 6px;**/ /**SwFxDel**/
+ 		padding-bottom: 4px !important;
+-		border-radius: 8px 8px 0 0;
++		margin-bottom: -18px !important; /**SwFxAdd**/
++		/**border-radius: 8px 8px 0 0;**/
++		border-radius: 8px 8px 6px 6px; /**SwFx**/
+ 	}
+ 	.jumpToPresentBar__0f481 {
+ 		background-color: var(--background-accent);
+@@ -2731,6 +2741,17 @@ html.visual-refresh {
+ 		justify-content: space-between;
+ 		overflow: hidden;
+ 	}
++
++	@supports(-moz-appearance:none) {
++		.messagesWrapper__36d07 {
++			.scroller__36d07 {
++				margin-bottom: 12px !important;
++				.scrollerSpacer__36d07 {
++					margin-bottom: -12px !important;
++				}
++			}
++		}
++	} /**SwFxAdd**/
+ }
+ 
+ html:is([lang="en-US"]) .groupWrapper__971b5 [data-text-variant="body-sm/medium"]:first-of-type {
+@@ -2788,6 +2809,8 @@ html:is([lang="en-us"]) .groupHeader__971b5[id="Filters"] [data-text-variant="bo
+ 	top: 51px;
+ 	gap: 8px;
+ 	z-index: 102;
++	margin: unset; /**SwFxAdd**/
++	margin-top: 4px; /**SwFxAdd**/
+ }
+ .bar_c38106 .trailing_c38106:has(> .clickable__9293f) {
+ 	top: 51px;
+@@ -2901,6 +2924,7 @@ html .bar_c38106 {
+ 		gap: 0px !important;
+ 		.isExpanded__48112 ul.stack_dbd263 {
+ 			height: auto !important;
++			padding-bottom: 9px !important; /**SwFxAdd**/
+ 		}
+ 	}
+ 	#guild-list-unread-dms:has(.listItem__650eb) {
+@@ -2914,6 +2938,7 @@ html .bar_c38106 {
+ 	}
+ 	.guildSeparator__252b6 {
+ 		height: 2px;
++		width: 50px; /**SwFxAdd**/
+ 	}
+ 	.folderIcon__48112 {
+ 		margin-top: 0px;
+@@ -2935,8 +2960,10 @@ html .bar_c38106 {
+ 	display: none;
+ }
+ .folderGroupBackground__48112 {
+-	left: 11px;
+-	width: 48px;
++	/**left: 11px;
++	width: 48px;**/
++	left: 8px; /**SwFx**/
++	width: 56px; /**SwFx**/
+ 	bottom: 4px;
+ 	border-radius: 16px 16px 25px 25px;
+ 	background: var(--background-modifier-accent);
+diff --git a/src/components/vars.css b/src/components/vars.css
+index e229942..bf934f4 100644
+--- a/src/components/vars.css
++++ b/src/components/vars.css
+@@ -35,7 +35,8 @@ html:not(.custom-theme-background) .theme-dark:not(.theme-darker, .theme-midnigh
+ 	--scrollbar-thin-track: transparent;
+ 	--scrollbar-auto-thumb: var(--primary-700);
+ 	--scrollbar-auto-track: var(--primary-630);
+-	--scrollbar-auto-scrollbar-color-thumb: var(--primary-700);
++	/**--scrollbar-auto-scrollbar-color-thumb: var(--primary-700);**/
++	--scrollbar-auto-scrollbar-color-thumb: #ffffff40; /**SwFx**/
+ 	--scrollbar-auto-scrollbar-color-track: var(--primary-630);
+ 	--elevation-stroke: 0 0 0 1px hsla(240, calc(var(--saturation-factor, 1) * 11%), 2%, 0.15);
+ 	--elevation-low:
+diff --git a/tools/sync.cmd b/tools/sync.cmd
+new file mode 100644
+index 0000000..775b4e6
+--- /dev/null
++++ b/tools/sync.cmd
+@@ -0,0 +1,22 @@
++@echo off
++rem Запуск патчера на Windows: двойной клик или "tools\sync.cmd --push" из консоли.
++rem Нужен только Git for Windows (https://git-scm.com/download/win), в нём уже есть bash и perl.
++chcp 65001 >nul
++setlocal
++cd /d "%~dp0.."
++
++set "GITBASH="
++for /f "delims=" %%G in ('where git 2^>nul') do if not defined GITBASH if exist "%%~dpG..\bin\bash.exe" set "GITBASH=%%~dpG..\bin\bash.exe"
++if not defined GITBASH if exist "%ProgramFiles%\Git\bin\bash.exe" set "GITBASH=%ProgramFiles%\Git\bin\bash.exe"
++if not defined GITBASH if exist "%LocalAppData%\Programs\Git\bin\bash.exe" set "GITBASH=%LocalAppData%\Programs\Git\bin\bash.exe"
++if not defined GITBASH (
++  echo Не найден Git for Windows. Поставь его: https://git-scm.com/download/win
++  pause
++  exit /b 1
++)
++
++"%GITBASH%" tools/sync.sh %*
++set "RC=%ERRORLEVEL%"
++echo.
++pause
++exit /b %RC%
+diff --git a/tools/sync.sh b/tools/sync.sh
+new file mode 100755
+index 0000000..af7c977
+--- /dev/null
++++ b/tools/sync.sh
+@@ -0,0 +1,153 @@
++#!/usr/bin/env bash
++# OldCord FireFix — патчер: подтягивает апстрим, накатывает фиксы, собирает публикуемую ветку.
++# Работает в Linux, macOS и Windows (Git Bash / tools\sync.cmd). Нужны только git и perl
++# (perl идёт в комплекте с Git for Windows и есть в Linux/macOS).
++#
++#   tools/sync.sh            обновить локально (ничего не пушит)
++#   tools/sync.sh --push     обновить и запушить fixes + main
++#   tools/sync.sh --build    только пересобрать main из fixes (после ручных правок)
++#
++# Ветки:
++#   fixes  — апстрим + ТВОИ коммиты с фиксами. Ссылки milbits НЕ трогаем. Править только тут.
++#   main   — генерируется скриптом: fixes + автозамена ссылок и шапки. Руками не править.
++#
++# Коды выхода: 0 ок, 2 конфликт при rebase (нужно решить руками), 3 проверка не прошла.
++set -euo pipefail
++
++# ---------- настройки ----------
++UPSTREAM_URL="https://github.com/milbits/oldcord"
++UPSTREAM_BRANCH="main"
++FIXES_BRANCH="fixes"
++PUBLISH_BRANCH="main"
++UP_USER="milbits"
++MY_USER="hvtccore"
++THEME_FILE="OldCord.theme.css"
++NAME_SUFFIX=" [FireFix]"
++VERSION_SUFFIX="-firefix"
++DESC_SUFFIX=" [Partial fix for Firefox (InTest)]"
++MARKER="SwFx"   # маркер твоих правок, по нему проверяем, что ничего не потерялось
++# -------------------------------
++
++MODE="local"
++case "${1:-}" in
++  --push)  MODE="push" ;;
++  --build) MODE="build" ;;
++  "") ;;
++  *) echo "неизвестный аргумент: $1"; exit 1 ;;
++esac
++
++cd "$(git rev-parse --show-toplevel)"
++say()  { echo "==> $*"; }
++warn() { echo "[!] $*"; }
++
++command -v perl >/dev/null || { echo "Не найден perl. На Windows запускай через Git Bash или tools\\sync.cmd."; exit 1; }
++
++if ! git diff --quiet || ! git diff --cached --quiet; then
++  echo "Есть незакоммиченные изменения — закоммить или спрячь (git stash) их сначала."; exit 1
++fi
++
++count_markers() {
++  local n=0 line
++  while IFS= read -r line; do n=$((n + ${line##*:})); done \
++    < <(git grep -c "$MARKER" "$1" -- src "$THEME_FILE" 2>/dev/null || true)
++  echo "$n"
++}
++
++if [[ "$MODE" != "build" ]]; then
++  git remote get-url upstream >/dev/null 2>&1 || git remote add upstream "$UPSTREAM_URL"
++  # rerere запоминает, как ты решил конфликт, и в следующий раз решает его сам
++  git config rerere.enabled true
++  git config rerere.autoupdate true
++
++  say "Тяну апстрим"
++  git fetch -q upstream "$UPSTREAM_BRANCH"
++  NEW_UP="upstream/$UPSTREAM_BRANCH"
++
++  git checkout -q "$FIXES_BRANCH"
++  OLD_UP="$(git merge-base HEAD "$NEW_UP")"
++  if [[ "$OLD_UP" == "$(git rev-parse "$NEW_UP")" ]]; then
++    say "Новых коммитов в апстриме нет"
++  else
++    N="$(git rev-list --count "$OLD_UP..$NEW_UP")"
++    say "В апстриме новых коммитов: $N, накатываю фиксы"
++    BEFORE="$(count_markers HEAD)"
++    FIX_FILES="$(git diff --name-only "$OLD_UP" HEAD)"
++
++    if ! git rebase -q "$NEW_UP"; then
++      echo
++      warn "Конфликт. Это значит, что апстрим поменял те же строки, что и ты."
++      echo "  1) git status — посмотри файлы с конфликтом, поправь их"
++      echo "  2) git add <файл> && git rebase --continue"
++      echo "  3) снова запусти sync с --push (или --build)"
++      echo "  Передумал: git rebase --abort"
++      exit 2
++    fi
++
++    AFTER="$(count_markers HEAD)"
++    if [[ "$BEFORE" != "$AFTER" ]]; then
++      warn "Число маркеров $MARKER изменилось: было $BEFORE, стало $AFTER. Проверь, не потерялся ли фикс."
++    fi
++
++    # Файлы с твоими фиксами, которые апстрим тоже менял: слилось чисто, но классы Discord
++    # могли переименоваться и фикс мог перестать срабатывать — их стоит проверить в клиенте.
++    TOUCHED="$(git diff --name-only "$OLD_UP" "$NEW_UP" -- $FIX_FILES || true)"
++    if [[ -n "$TOUCHED" ]]; then
++      say "Апстрим менял файлы, где есть твои фиксы (стоит проверить в клиенте):"
++      git diff --stat "$OLD_UP" "$NEW_UP" -- $TOUCHED | sed 's/^/    /'
++    fi
++  fi
++fi
++
++# ---------- сборка публикуемой ветки ----------
++say "Собираю $PUBLISH_BRANCH из $FIXES_BRANCH"
++git checkout -q -B "$PUBLISH_BRANCH" "$FIXES_BRANCH"
++
++export UP_USER MY_USER NAME_SUFFIX VERSION_SUFFIX DESC_SUFFIX
++
++# Меняем только ссылки, а не имя автора (milbit остаётся в @author)
++git ls-files -z -- '*.css' '*.md' | xargs -0 perl -i -pe '
++  s#\Q$ENV{UP_USER}\E\.github\.io#$ENV{MY_USER}.github.io#g;
++  s#github\.com/\Q$ENV{UP_USER}\E/oldcord#github.com/$ENV{MY_USER}/oldcord#gi;
++  s#raw\.githubusercontent\.com/\Q$ENV{UP_USER}\E/oldcord#raw.githubusercontent.com/$ENV{MY_USER}/oldcord#gi;
++'
++
++# Шапка темы: берём значения апстрима и дописываем суффиксы (окончания строк сохраняем, в т.ч. CRLF)
++perl -i -pe '
++  if ($. <= 15) {
++    s/^( \* \@name .*?)[ \t]*(\r?)$/$1$ENV{NAME_SUFFIX}$2/;
++    s/^( \* \@version .*?)[ \t]*(\r?)$/$1$ENV{VERSION_SUFFIX}$2/;
++    s/^( \* \@description .*?)[ \t]*(\r?)$/$1$ENV{DESC_SUFFIX}$2/;
++  }
++' "$THEME_FILE"
++
++LEFT="$(git grep -nE "${UP_USER}\.github\.io|(github|githubusercontent)\.com/${UP_USER}/" -- '*.css' '*.md' || true)"
++if [[ -n "$LEFT" ]]; then
++  warn "Остались ссылки на апстрим (добавь шаблон замены выше):"
++  echo "$LEFT"
++  git checkout -q -f "$FIXES_BRANCH"
++  exit 3
++fi
++
++UPVER="$(git log -1 --format=%h "upstream/$UPSTREAM_BRANCH" 2>/dev/null || echo '?')"
++git commit -qam "auto: build from $FIXES_BRANCH (upstream $UPVER)"
++say "Готово: $(git log -1 --format='%h %s')"
++head -n 9 "$THEME_FILE" | sed 's/^/    /'
++
++git checkout -q "$FIXES_BRANCH"
++
++if [[ "$MODE" == "push" ]]; then
++  git fetch -q origin "$PUBLISH_BRANCH" 2>/dev/null || true
++  if git rev-parse -q --verify "origin/$PUBLISH_BRANCH" >/dev/null &&
++     [[ "$(git rev-parse "$PUBLISH_BRANCH^{tree}")" == "$(git rev-parse "origin/$PUBLISH_BRANCH^{tree}")" ]]; then
++    # Содержимое не изменилось — не пушим, чтобы GitHub Pages не пересобирался впустую
++    git branch -q -f "$PUBLISH_BRANCH" "origin/$PUBLISH_BRANCH"
++    say "Изменений нет, пушить нечего"
++    exit 0
++  fi
++  say "Пушу (GitHub Pages обновится сам через пару минут)"
++  git push -q --force-with-lease origin "$FIXES_BRANCH"
++  git push -q --force origin "$PUBLISH_BRANCH"
++else
++  echo
++  echo "Проверь и запушь:  git push --force-with-lease origin $FIXES_BRANCH && git push -f origin $PUBLISH_BRANCH"
++fi
+-- 
+2.43.0
+
