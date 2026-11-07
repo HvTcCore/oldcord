@@ -120,6 +120,20 @@ perl -i -pe '
   }
 ' "$THEME_FILE"
 
+# Обновление классов Discord: только в собираемой ветке, fixes и оригинал не трогаем.
+# Если Discord недоступен или нет python — просто собираем без этого шага.
+if [[ "${REMAP_CLASSES:-1}" == "1" ]]; then
+  PY="$(command -v python3 || command -v python || true)"
+  if [[ -n "$PY" ]] && "$PY" -c 'import sys; sys.exit(sys.version_info < (3, 8))' 2>/dev/null; then
+    say "Обновляю классы Discord"
+    "$PY" tools/classmap.py --apply --no-guess ${CLASSMAP_SUMMARY:+--summary "$CLASSMAP_SUMMARY"} \
+      | sed -n '/^Классов/,/^  не найдены/p;/^Заменено/p' | sed 's/^/    /' \
+      || warn "Не получилось обновить классы, собираю без этого"
+  else
+    warn "Нет python 3.8+, пропускаю обновление классов"
+  fi
+fi
+
 LEFT="$(git grep -nE "${UP_USER}\.github\.io|(github|githubusercontent)\.com/${UP_USER}/" -- '*.css' '*.md' || true)"
 if [[ -n "$LEFT" ]]; then
   warn "Остались ссылки на апстрим (добавь шаблон замены выше):"
