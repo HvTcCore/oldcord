@@ -198,8 +198,8 @@ html:not(.custom-theme-background) .theme-light {
 	--badge-background-brand: var(--blurple);
 	--text-link: oklch(0.45 0.3 220);
 
-	--expressive-gradient-nitro-pink-start: transparent !important;
-	--expressive-gradient-nitro-pink-end: transparent !important;
+	/**--expressive-gradient-nitro-pink-start: transparent !important;
+	--expressive-gradient-nitro-pink-end: transparent !important;**/ /**SwFxDel**/
 }
 :root {
 	--font-primary: Whitney, "Helvetica Neue", "gg sans", Helvetica, Arial, sans-serif;
@@ -344,8 +344,8 @@ html:not(.custom-theme-background) .theme-light {
 	--text-link: color-mix(in oklab, var(--blue-345) 100%, var(--theme-text-color, #000) var(--theme-text-color-amount, 0%));
 	--progressbar-indicator-background: var(--blurple);
 
-	--expressive-gradient-nitro-pink-start: transparent !important;
-	--expressive-gradient-nitro-pink-end: transparent !important;
+	/**--expressive-gradient-nitro-pink-start: transparent !important;
+	--expressive-gradient-nitro-pink-end: transparent !important;**/ /**SwFxDel**/
 }
 
 .cardPrimary_qCN-Ri {
@@ -628,8 +628,8 @@ html:not(.custom-theme-background).theme-dark {
 	--header-secondary: color-mix(in oklab, var(--neutral-9) 100%, var(--custom-theme-text-color, #000) var(--custom-theme-text-color-amount, 0%));
 	--message-background-hover: hsl(var(--primary-900-hsl) / 0.06);
 
-	--expressive-gradient-nitro-pink-start: transparent !important;
-	--expressive-gradient-nitro-pink-end: transparent !important;
+	/**--expressive-gradient-nitro-pink-start: transparent !important;
+	--expressive-gradient-nitro-pink-end: transparent !important;**/ /**SwFxDel**/
 }
 html:not(.custom-theme-background).theme-light,
 html:not(.custom-theme-background) .theme-light {
