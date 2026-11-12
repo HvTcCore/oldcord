@@ -353,7 +353,7 @@ html:not(.custom-theme-background) .theme-light {
 }
 
 .colorDefault_Q02kKo,
-.colorSuccess__6e2b9 {
+.colorSuccess_Q02kKo {
 	--custom-notice-background: var(--status-positive-background);
 	--custom-notice-text: var(--status-positive-text);
 	--custom-notice-button-hover: var(--status-positive-background);

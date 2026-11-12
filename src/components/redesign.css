@@ -1987,7 +1987,7 @@ html.visual-refresh {
 	}
 
 	/* hide idle call background */
-	.gradientBackground__11664,
+	.gradientBackground_BUFBam,
 	.gradientBackground_H9Q8qm {
 		display: none;
 	}
@@ -2237,7 +2237,7 @@ html.visual-refresh {
 		z-index: 102;
 	}
 
-	.changelog_eae0ef,
+	.changelog_FLhhV_,
 	.safetyChecklist_FLhhV_ {
 		background-color: var(--primary-630);
 	}
@@ -2696,8 +2696,8 @@ html.visual-refresh {
 	}
 
 	@supports(-moz-appearance:none) {
-		.messagesWrapper__36d07 {
-			.scroller__36d07 {
+		.messagesWrapper_8AE1Qq {
+			.scroller_8AE1Qq {
 				margin-bottom: 12px !important;
 				.scrollerSpacer_8AE1Qq {
 					margin-bottom: -12px !important;
@@ -3015,7 +3015,7 @@ html .bar_3zSH5d {
 	}
 }
 
-#app-mount .emojiRemove_e7d73e {
+#app-mount .emojiRemove_XTvD56 {
 	opacity: 0;
 	color: transparent;
 	position: absolute;
