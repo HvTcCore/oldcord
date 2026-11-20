@@ -14,7 +14,7 @@
 
 /** bottom-left popout */
 
-.fixed_M3qk4j:has(.userMenuUsername_lZtGs8, .status_ce8328) {
+.fixed_M3qk4j:has(.userMenuUsername_lZtGs8, .status_nitlyF) {
 	width: max-content;
 }
 .italicPrompt_rmCN9_ {
@@ -816,7 +816,7 @@ html.theme-dark .badgeContainer_CTWncy path {
 	padding: 8px 16px;
 	background: unset !important;
 }
-.labelRow_ab8609 {
+.labelRow_rmCN9_ {
 	display: none;
 }
 .user-profile-popout .visibleContainer_af9888 {
@@ -1731,11 +1731,11 @@ html:is([lang="en-GB"], [lang="en-us"]) .footer_NOlkhE::after {
 }
 
 /* dumbass nitro tooltip
-.clickTrapContainer_VVADeK:has(.tooltipContainer_f240e3) {
+.clickTrapContainer_VVADeK:has(.tooltipContainer_iRdycz) {
 	.tooltipContent_3_v8qp {
 		padding: 8px 3px;
 	}
-	.tooltipWordmarkContainer_f240e3 {
+	.tooltipWordmarkContainer_iRdycz {
 		position: absolute;
 		bottom: 20px;
 		right: 83px;
